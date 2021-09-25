@@ -1,8 +1,22 @@
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
+import Master from '../src/components/Master'
 
-const MyApp: React.FC = () => {
-    return (
-        <div>teste</div>
-    )
+interface Props {
+  theme: string
 }
 
-export default MyApp
+const Home: React.FC<Props | any> = (props) => {
+  return <Master theme={props.theme}>index</Master>
+}
+
+export default Home
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookie = parseCookies(context)
+  return {
+    props: {
+      theme: cookie.theme,
+    },
+  }
+}
